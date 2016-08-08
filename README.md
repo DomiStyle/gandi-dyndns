@@ -10,7 +10,7 @@ It requires a server running a reasonably recent version of Python 2. It has
 been tested on Ubuntu/Arch Linux using Python 2.7.
 
 ### Walkthrough
-###### Last updated December 29th, 2015.
+###### Last updated August 8th, 2016.
 
 Say you'd like to be able to access your home server externally at
 `dynamic.example.com`.
@@ -80,15 +80,6 @@ Then you'd need to configure the script.
 
 1. Save and close the file.
 
-#### Running the Script
-You can run the script from the command line of an OSX/Unix system as described
-in the [Use](#use) section. It will be useful to run this on a `cron` system of
-some kind so that as long as the server is running, it will update its own IP
-address (see:
-http://code.tutsplus.com/tutorials/scheduling-tasks-with-cron-jobs--net-8800).
-Running the script with the `test` parameter is also a good idea, so you can
-ensure that good results come back from most of the providers.
-
 #### Notes
 
 The first time your A record is configured, it may take several hours
@@ -108,28 +99,35 @@ Config values for your Gandi account and domain/subdomain must be located in a
 contains an example configuration including all configurable options, and should
 be used as a template for your personal `config.json`.
 
-#### providers.json
-The `providers.json` file contains a list of all providers that are queried for
-an external IP address. The providers are always queried in a random order, and
-several are queried each time the script is run in order to minimize the chance
-of obtaining an invalid IP address as returned by a single provider. When the
-results from several different providers concur, that address is used.
-
 ### Use
-Simply running the script will cause it to update the IP address immediately.
+Pass an IP address to the script and it will update your records according to your config.json file.
 
 ```bash
-./gandi_dyndns.py
+./gandi_dyndns.py YOUR_IP_HERE
 ```
 
-To test all the providers and see what kind of results they return, you can run
-the script with the `test` parameter:
+For usage with pfSense or any similar firewall/router with options for custom dynamic DNS providers you can use a simple PHP script like this:
 
-```bash
-./gandi_dyndns.py test
+```php
+<?php
+   if(isset($_GET['ip']) && filter_var($_GET['ip'], FILTER_VALIDATE_IP))
+   {
+      $output = shell_exec('./gandi_dyndns.py ' . $_GET['ip']);
+      echo "OK";
+   }
+   else
+      echo "FAIL";
+?>
 ```
 
-This will print out all the addressed received from each provider. Not every
-provider may return a single, or even uniform/correct, IP address! This is
-expected behavior, and the script waits for consensus around a given IP amongst
-several providers before selecting it to be used.
+Call it from your pfSense under "Services -> Dynamic DNS":
+
+| Field                             | Value
+| ----:                             | :----
+| Service Type                      | Custom
+| Interface to monitor              | WAN
+| Interface to send update from     | LAN (also works with WAN)
+| Update URL                        | http://dyndns.example.org
+| Result Match                      | OK
+
+IMPORTANT: Make sure to restrict the server where you are hosting your dynamic DNS script to only allow access from the IP of your firewall. If you can't do this because your web server is located on the WAN side you can add another HTTP parameter for a password authentication.
