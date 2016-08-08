@@ -1,6 +1,8 @@
 gandi_dyndns
 ----
 
+Original script by [Jason T. Bradshaw](https://github.com/jasontbradshaw). This version was modified to receive an updated IP via an CLI argument rather than depending on external services. This makes it simpler to use for Dynamic DNS setups where the router/firewall already knows the external IP address. A common setup would be a pfSense firewall with a custom Dynamic DNS provider.
+
 This implements a simple dynamic DNS updater for the
 [Gandi](https://www.gandi.net) registrar. It uses their XML-RPC API to update
 the zone file for a subdomain of a domain name to point at the external IPv4
