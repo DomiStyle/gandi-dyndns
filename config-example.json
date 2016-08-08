@@ -1,6 +1,6 @@
 {
   "api_key": "twentyfourcharacterslong",
   "domains": {
-    "example.com": [ "@", "mail", "xmpp" ]
+    "example.com": [ "@", "*" ]
   }
 }
