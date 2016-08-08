@@ -127,7 +127,7 @@ Call it from your pfSense under "Services -> Dynamic DNS":
 | Service Type                      | Custom
 | Interface to monitor              | WAN
 | Interface to send update from     | LAN (also works with WAN)
-| Update URL                        | http://dyndns.example.org
+| Update URL                        | http://dyndns.example.org?ip=%IP%
 | Result Match                      | OK
 
 IMPORTANT: Make sure to restrict the server where you are hosting your dynamic DNS script to only allow access from the IP of your firewall. If you can't do this because your web server is located on the WAN side you can add another HTTP parameter for a password authentication.
