@@ -132,4 +132,6 @@ Call it from your pfSense under "Services -> Dynamic DNS":
 | Update URL                        | http://dyndns.example.org?ip=%IP%
 | Result Match                      | OK
 
+NOTE: dyndns.example.org points to the web server where the above PHP script and the Python script are hosted. While you can host this directly on your firewall I wouldn't recommend it.
+
 IMPORTANT: Make sure to restrict the server where you are hosting your dynamic DNS script to only allow access from the IP of your firewall. If you can't do this because your web server is located on the WAN side you can add another HTTP parameter for a password authentication.
