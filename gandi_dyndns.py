@@ -181,7 +181,8 @@ def update_ip(external_ip):
       }, {
         'name': new_dynamic_record['name'],
         'type': new_dynamic_record['type'],
-        'value': external_ip
+        'value': external_ip,
+        'ttl': 300
       })
 
       # ensure that we successfully set the new dynamic record
@@ -202,7 +203,7 @@ def update_ip(external_ip):
     # set the new zone version as the active version
     log.info('Updating active zone version...')
     gandi.domain.zone.version.set(zone_id, new_version_id)
-    
+
     log.info('Set zone %d as the active zone version.', new_version_id)
     log.info('Dynamic record successfully updated to %s!', external_ip)
 
