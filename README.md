@@ -1,6 +1,10 @@
 gandi_dyndns
 ----
 
+### Notes
+
+This script uses the old XML-RPC API by Gandi. If you updated your DNS records to their new LiveDNS service you need to use [this script](https://github.com/DomiStyle/gandi-live-dns) instead.
+
 Original script by [Jason T. Bradshaw](https://github.com/jasontbradshaw). This version was modified to receive an updated IP via an CLI argument rather than depending on external services. This makes it simpler to use for Dynamic DNS setups where the router/firewall already knows the external IP address. A common setup would be a pfSense firewall with a custom Dynamic DNS provider.
 
 This implements a simple dynamic DNS updater for the
